@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import cvFile from "../JatinDutt.pdf";
 
 const TYPED_LINES = [
   "Full Stack Developer + DevOps Engineer",
@@ -536,7 +535,7 @@ export default function App() {
                 can contribute with discipline, learn quickly, and continue growing as an engineer.
               </p>
               <div className="contact-links">
-                <a href={cvFile} className="btn primary" download="Jatin-Dutt-CV.pdf">
+                <a href="/JatinDutt_CV.pdf" className="btn primary" download="JatinDutt_CV.pdf">
                   Download CV
                 </a>
                 <a href="mailto:duttjatinn@gmail.com" className="btn primary">
