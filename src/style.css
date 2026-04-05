@@ -144,11 +144,25 @@ nav {
   height: 2.8rem;
   display: grid;
   place-items: center;
+  overflow: hidden;
   border-radius: 16px;
   background: linear-gradient(135deg, var(--white), #d9e6f3);
   color: #07101a;
   font-weight: 800;
   letter-spacing: 0.04em;
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brand-fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .brand strong,
@@ -789,6 +803,7 @@ nav {
 
 .icon-btn {
   min-width: 3.2rem;
+  min-height: 3.2rem;
   padding-inline: 1rem;
 }
 
@@ -912,6 +927,10 @@ footer {
   .btn,
   .contact-links a {
     width: 100%;
+  }
+
+  .contact-links .icon-btn {
+    width: auto;
   }
 }
 

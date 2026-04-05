@@ -291,7 +291,22 @@ export default function App() {
       <nav>
         <div className="nav-inner">
           <a className="brand" href="#top">
-            <div className="brand-mark">JD</div>
+            <div className="brand-mark">
+              <img
+                src="/profile-extracted.png"
+                alt="Jatin Dutt"
+                onError={(event) => {
+                  event.currentTarget.style.display = "none";
+                  const fallback = event.currentTarget.nextElementSibling;
+                  if (fallback) {
+                    fallback.hidden = false;
+                  }
+                }}
+              />
+              <span className="brand-fallback" hidden>
+                JD
+              </span>
+            </div>
             <div>
               <strong>Jatin Dutt</strong>
               <span>Full Stack + DevOps</span>
@@ -578,8 +593,18 @@ export default function App() {
               </p>
 
               <div className="contact-links">
-                <a href="mailto:duttjatinn@gmail.com" className="btn primary">
-                  duttjatinn@gmail.com
+                <a
+                  href="mailto:duttjatinn@gmail.com"
+                  className="btn primary icon-btn"
+                  aria-label="Email"
+                  title="Email"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      d="M3 5.75A2.75 2.75 0 0 1 5.75 3h12.5A2.75 2.75 0 0 1 21 5.75v12.5A2.75 2.75 0 0 1 18.25 21H5.75A2.75 2.75 0 0 1 3 18.25V5.75Zm2.2-.75a.75.75 0 0 0-.44 1.36l6.8 4.94a.75.75 0 0 0 .88 0l6.8-4.94A.75.75 0 0 0 18.8 5H5.2Zm14.3 2.82-6.18 4.49a2.25 2.25 0 0 1-2.64 0L4.5 7.82v10.43c0 .41.34.75.75.75h13.5c.41 0 .75-.34.75-.75V7.82Z"
+                      fill="currentColor"
+                    />
+                  </svg>
                 </a>
                 <a
                   href="https://github.com/JatinDuttt"
@@ -626,8 +651,18 @@ export default function App() {
                     />
                   </svg>
                 </a>
-                <a href="tel:9053620235" className="btn secondary">
-                  +91 9053620235
+                <a
+                  href="tel:9053620235"
+                  className="btn secondary icon-btn"
+                  aria-label="Phone"
+                  title="Phone"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20a1 1 0 0 1-1 1C10.06 21 3 13.94 3 5a1 1 0 0 1 1-1h3.49c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.19 2.2Z"
+                      fill="currentColor"
+                    />
+                  </svg>
                 </a>
               </div>
             </div>
