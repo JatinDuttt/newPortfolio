@@ -17,7 +17,7 @@ const NAV_ITEMS = [
 const STATS = [
   { value: 2, label: "Industry experiences" },
   { value: 3, label: "Selected projects" },
-  { value: 14, label: "Core tools and technologies" }
+  { value: 20, label: "Core tools and technologies" }
 ];
 
 const HIGHLIGHTS = [
@@ -92,21 +92,23 @@ const PROJECTS = [
   }
 ];
 
-const SKILLS = [
-  "HTML5",
-  "CSS3",
-  "JavaScript",
-  "React",
-  "Java",
-  "SQL",
-  "JDBC",
-  "Python",
-  "Git",
-  "Docker",
-  "AWS EC2 / S3",
-  "CI/CD",
-  "Tailwind CSS",
-  "jQuery"
+const SKILL_GROUPS = [
+  {
+    title: "Frontend",
+    items: ["HTML5", "CSS3", "JavaScript", "React", "Tailwind CSS"]
+  },
+  {
+    title: "Backend & Data",
+    items: ["Java", "Node.js", "SQL", "JDBC", "Firebase"]
+  },
+  {
+    title: "Cloud & DevOps",
+    items: ["Git", "GitHub", "Docker", "Linux", "Shell Scripting", "CI/CD", "AWS"]
+  },
+  {
+    title: "Engineering Basics",
+    items: ["OOP", "DBMS", "REST APIs"]
+  }
 ];
 
 const EDUCATION = [
@@ -525,28 +527,32 @@ export default function App() {
             </div>
 
             <div className="skills">
-              <article className="skill-card reveal">
-                <h3>Core stack</h3>
-                <ul className="stack">
-                  {SKILLS.map((skill) => (
-                    <li key={skill}>{skill}</li>
-                  ))}
-                </ul>
-              </article>
+              <div className="skill-grid">
+                {SKILL_GROUPS.map((group) => (
+                  <article className="skill-card reveal" key={group.title}>
+                    <h3>{group.title}</h3>
+                    <ul className="stack">
+                      {group.items.map((skill) => (
+                        <li key={skill}>{skill}</li>
+                      ))}
+                    </ul>
+                  </article>
+                ))}
+              </div>
 
               <div className="side">
                 <article className="signal-panel reveal">
                   <h3>What I bring</h3>
                   <p>
-                    A foundation that spans application development, cloud deployment basics, containerization, and
-                    delivery-focused engineering habits.
+                    A practical mix of frontend work, Java-based backend fundamentals, and DevOps exposure that helps me
+                    contribute across the build-to-release cycle.
                   </p>
                 </article>
                 <article className="signal-panel reveal">
-                  <h3>Best-fit roles</h3>
+                  <h3>Relevant additions</h3>
                   <p>
-                    Full Stack Developer, Software Engineer, DevOps Engineer, and other full-time engineering roles where
-                    I can contribute meaningfully and keep growing quickly.
+                    The strongest extra skills to keep on this portfolio are GitHub, Linux, Shell Scripting, REST APIs,
+                    and Firebase because they support the full stack plus DevOps story you are presenting.
                   </p>
                 </article>
               </div>
@@ -672,7 +678,7 @@ export default function App() {
 
       <footer>
         <div className="footer">
-          <span>Jatin Dutt Portfolio</span>
+          <span>Jatin Dutt</span>
           <span>Built with React and designed for a clearer professional first impression.</span>
         </div>
       </footer>

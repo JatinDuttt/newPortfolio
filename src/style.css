@@ -738,21 +738,31 @@ nav {
   gap: 1.15rem;
 }
 
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
 .skill-card {
   padding: 1.45rem;
   border-radius: 24px;
 }
 
 .stack {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
   list-style: none;
 }
 
 .stack li {
-  padding: 0.9rem 1rem;
+  padding: 0.72rem 0.9rem;
+  border: 1px solid rgba(132, 255, 187, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
   font: 400 0.8rem var(--mono);
+  color: rgba(245, 248, 252, 0.88);
 }
 
 .side {
@@ -869,7 +879,8 @@ footer {
 
   .features,
   .projects,
-  .edu-grid {
+  .edu-grid,
+  .skill-grid {
     grid-template-columns: 1fr 1fr;
   }
 
@@ -902,7 +913,7 @@ footer {
   .edu-grid,
   .panel-grid,
   .strip,
-  .stack {
+  .skill-grid {
     grid-template-columns: 1fr;
   }
 
