@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const TYPED_LINES = [
   "Full Stack Developer and DevOps Engineer",
@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
+  { label: "Education", href: "#education" },
   { label: "Contact", href: "#contact" }
 ];
 
@@ -70,7 +71,10 @@ const PROJECTS = [
     description:
       "Designed a reporting workflow that estimates sustainability metrics such as plastic savings and carbon reduction from structured operational data.",
     outcome: "Turned a complex reporting process into a clearer, faster, and more repeatable system.",
-    stack: ["JavaScript", "AI Logic", "Structured Data"]
+    role: "Frontend flow, calculation logic, and report structure",
+    features: ["Metric estimation", "Structured inputs", "Export-ready summary"],
+    stack: ["JavaScript", "AI Logic", "Structured Data"],
+    liveUrl: ""
   },
   {
     index: "Project 02",
@@ -79,7 +83,10 @@ const PROJECTS = [
     description:
       "Built an AI-assisted categorization flow that automatically tags and classifies products to improve organization and SEO consistency.",
     outcome: "Reduced manual effort while producing cleaner catalog structure and stronger discoverability.",
-    stack: ["JavaScript", "Automation", "SEO"]
+    role: "Automation logic, category rules, and SEO-focused output",
+    features: ["Auto tagging", "Catalog cleanup", "SEO consistency"],
+    stack: ["JavaScript", "Automation", "SEO"],
+    liveUrl: ""
   },
   {
     index: "Project 03",
@@ -88,7 +95,10 @@ const PROJECTS = [
     description:
       "Developed a role-based user management platform with authentication, CRUD workflows, and structured access control.",
     outcome: "Delivered a maintainable foundation for secure user operations and admin management.",
-    stack: ["Authentication", "CRUD", "Full Stack"]
+    role: "Authentication, admin workflows, and access-control UI",
+    features: ["Role-based access", "CRUD operations", "Admin dashboard"],
+    stack: ["Authentication", "CRUD", "Full Stack"],
+    liveUrl: ""
   }
 ];
 
@@ -160,113 +170,11 @@ const EDUCATION = [
 ];
 
 export default function App() {
-  const [typedText, setTypedText] = useState("");
-  const spotlightRef = useRef(null);
+  const typedText = TYPED_LINES[0];
   const progressRef = useRef(null);
   const tiltRef = useRef(null);
 
   useEffect(() => {
-    let lineIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-    let timeoutId;
-
-    const typeLoop = () => {
-      const text = TYPED_LINES[lineIndex];
-
-      if (!deleting) {
-        charIndex += 1;
-        setTypedText(text.slice(0, charIndex));
-
-        if (charIndex === text.length) {
-          deleting = true;
-          timeoutId = window.setTimeout(typeLoop, 1200);
-          return;
-        }
-      } else {
-        charIndex -= 1;
-        setTypedText(text.slice(0, charIndex));
-
-        if (charIndex === 0) {
-          deleting = false;
-          lineIndex = (lineIndex + 1) % TYPED_LINES.length;
-        }
-      }
-
-      timeoutId = window.setTimeout(typeLoop, deleting ? 24 : 48);
-    };
-
-    timeoutId = window.setTimeout(typeLoop, 220);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, []);
-
-  useEffect(() => {
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          entry.target.classList.add("visible");
-          revealObserver.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.16 }
-    );
-
-    const countObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          const target = Number(entry.target.dataset.count);
-          const start = performance.now();
-          const duration = 1100;
-
-          const tick = (now) => {
-            const progress = Math.min((now - start) / duration, 1);
-            entry.target.textContent = String(Math.floor(progress * target));
-
-            if (progress < 1) {
-              window.requestAnimationFrame(tick);
-              return;
-            }
-
-            entry.target.textContent = String(target);
-          };
-
-          window.requestAnimationFrame(tick);
-          countObserver.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.7 }
-    );
-
-    document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
-    document.querySelectorAll("[data-count]").forEach((element) => countObserver.observe(element));
-
-    return () => {
-      revealObserver.disconnect();
-      countObserver.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    const onMouseMove = (event) => {
-      if (!spotlightRef.current) {
-        return;
-      }
-
-      spotlightRef.current.style.left = `${event.clientX}px`;
-      spotlightRef.current.style.top = `${event.clientY}px`;
-    };
-
     const onScroll = () => {
       if (progressRef.current) {
         const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -306,31 +214,55 @@ export default function App() {
 
     const tiltElement = tiltRef.current;
 
-    window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("scroll", onScroll, { passive: true });
     tiltElement?.addEventListener("mousemove", onTiltMove);
     tiltElement?.addEventListener("mouseleave", onTiltLeave);
     onScroll();
 
     return () => {
-      window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("scroll", onScroll);
       tiltElement?.removeEventListener("mousemove", onTiltMove);
       tiltElement?.removeEventListener("mouseleave", onTiltLeave);
     };
   }, []);
 
+  useEffect(() => {
+    const removeExtensionOverlays = () => {
+      document.querySelectorAll("[data-extension-id], [data-extension], [data-ext], iframe[src^='chrome-extension://']").forEach((node) => {
+        node.remove();
+      });
+
+      document.querySelectorAll("img[src^='chrome-extension://'], script[src^='chrome-extension://']").forEach((node) => {
+        node.remove();
+      });
+    };
+
+    removeExtensionOverlays();
+    const observer = new MutationObserver(removeExtensionOverlays);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const closeMobileMenu = (event) => {
+    event.currentTarget.closest("details")?.removeAttribute("open");
+  };
+
   return (
     <>
-      <div className="progress" ref={progressRef} />
-      <div className="spotlight" ref={spotlightRef} />
+      <div className="progress" ref={progressRef} aria-hidden="true" />
 
-      <nav>
+      <nav aria-label="Primary navigation">
         <div className="nav-inner">
           <a className="brand" href="#top">
             <div className="brand-mark">
               <img
-                src="/profile-extracted.png"
+                src="/profile-160.png"
+                sizes="45px"
+                width="45"
+                height="45"
                 alt="Jatin Dutt"
                 onError={(event) => {
                   event.currentTarget.style.display = "none";
@@ -359,6 +291,19 @@ export default function App() {
               </li>
             ))}
           </ul>
+
+          <details className="mobile-menu">
+            <summary>Menu</summary>
+            <ul>
+              {NAV_ITEMS.map((item) => (
+                <li key={item.href}>
+                  <a href={item.href} onClick={closeMobileMenu}>
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
         </div>
       </nav>
 
@@ -385,10 +330,18 @@ export default function App() {
                 </a>
               </div>
 
+              <div className="hero-availability">
+                <span>Available for full-time roles</span>
+                <a href="mailto:duttjatinn@gmail.com">duttjatinn@gmail.com</a>
+                <a href="https://www.linkedin.com/in/jatin-dutt-8b357930a/" target="_blank" rel="noreferrer">
+                  Jatin Dutt on LinkedIn
+                </a>
+              </div>
+
               <div className="proof">
                 {STATS.map((item) => (
                   <div className="proof-card" key={item.label}>
-                    <strong data-count={item.value}>0</strong>
+                    <strong>{item.value}</strong>
                     <span>{item.label}</span>
                   </div>
                 ))}
@@ -405,7 +358,10 @@ export default function App() {
                 <div className="hero-card-profile">
                   <div className="hero-card-avatar">
                     <img
-                      src="/profile-extracted.png"
+                      src="/profile-160.png"
+                      sizes="80px"
+                      width="80"
+                      height="80"
                       alt="Jatin Dutt"
                       onError={(event) => {
                         event.currentTarget.style.display = "none";
@@ -536,12 +492,36 @@ export default function App() {
                   </div>
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
+                  <div className="project-role">
+                    <span>Role</span>
+                    <strong>{project.role}</strong>
+                  </div>
+                  <ul className="project-features">
+                    {project.features.map((feature) => (
+                      <li key={feature}>{feature}</li>
+                    ))}
+                  </ul>
                   <div className="metric">{project.outcome}</div>
                   <ul className="tags">
                     {project.stack.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
+                  {project.liveUrl ? (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="project-link"
+                      aria-label={`Open ${project.title}`}
+                    >
+                      Open Project
+                    </a>
+                  ) : (
+                    <span className="project-link disabled">
+                      Vercel Link Coming Soon
+                    </span>
+                  )}
                 </article>
               ))}
             </div>
